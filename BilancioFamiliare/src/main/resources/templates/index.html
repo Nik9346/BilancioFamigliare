@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<link th:href="@{bootstrap.min.css}" rel="stylesheet">
+
+<title>Home Page</title>
+</head>
+<body>
+<div class="container">
+<div class="m-3">
+	<h1 class="p-3 border text-center" >Benvenuto nel Bilancio Familiare</h1>
+</div>	
+	<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Data</th>
+      <th scope="col">Descrizione</th>
+      <th scope="col">Entrate</th>
+      <th scope="col">Uscite</th>
+      <th scope="col">Azioni</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr th:each="operazione : ${operazioni}">
+      <th th:text="${operazione.id}" scope="row">1</th>
+      <td th:text="${operazione.data}"></td>
+      <td th:text="${operazione.descrizione}"></td>
+      <td th:if="${operazione.valore > 0}" th:text="${operazione.valore}" style="color:green"></td> <td th:if="${operazione.valore < 0}"></td>
+      <td th:if="${operazione.valore <= 0}" th:text="${operazione.valore}" style="color:red"></td><td th:if="${operazione.valore > 0}"></td>
+      <td><a class="btn btn-danger" type="button" th:href="@{/elimina(id=${operazione.id})}">Elimina</a></td>
+    </tr>
+  </tbody>
+  <tfoot>
+  <tr>
+  	<th colspan="5" class="text-end" scope="col">Bilancio Attuale €</th>
+  	<td colspan="2" class="text-end" th:text=" + ${totale}" th:if="${totale > 0}" style="color:green"></td>
+  	<td class="text-end" th:text="${totale}" th:if="${totale < 0}" style="color:red"></td>
+  </tr>
+  </tfoot>
+</table>
+<div class="text-end">
+	<a class="btn btn-primary" th:href="@{/operation}">Inserisci operazione</a>
+</div>
+</div>
+</body>
+</html>
