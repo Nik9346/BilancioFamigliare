@@ -25,11 +25,8 @@ public class BalanceController {
 	public String getPage(Model model, @RequestParam(name="id", required = false) Integer id) {
 		//recuperiamo l'intera lista delle operazioni facendo una chiamata al db
 		List<Bilancio> operazioni = bilancioService.getOperazioni();
-		//costruiamo un oggetto operazione recuperando i dati dal db se tra i parametri della richiesta abbiamo id, altrimenti creiamo un nuovo oggetto bilancio
-		Bilancio operazione = id == null ? new Bilancio() : bilancioService.getOperazioneById(id);
 		//settiamo gli attributi del model con i dati delle variabili operazioni e operazione
 		model.addAttribute("operazioni", operazioni);
-		model.addAttribute("operazione",operazione);
 		//assegniamo al model la variabile totale recuperando dal service il totale delle operazioni
 		model.addAttribute("totale",bilancioService.getTotaleBilancio());
 		//passiamo il tutto alla pagina balance

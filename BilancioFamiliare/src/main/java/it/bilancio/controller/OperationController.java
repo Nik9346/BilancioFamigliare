@@ -28,6 +28,7 @@ public class OperationController {
 	// rispondiamo alle richieste get ritornando la pagina
 	@GetMapping
 	public String getPage(Model model) {
+		//istanzio il nuovo oggetto in classe bilancio e lo setto come attributo del model
 		model.addAttribute("bilancio", new Bilancio());
 		return "operation";
 	}
@@ -37,7 +38,7 @@ public class OperationController {
 	// pagina del form per immettere nuovamente i dati, altrimenti registriamo
 	// l'oggetto e quindi l'operazione
 	@PostMapping
-	String formManager(@Valid @ModelAttribute("bilancio") Bilancio bilancio, BindingResult result, Model model) {
+	String formManager(@Valid @ModelAttribute("bilancio") Bilancio bilancio, BindingResult result) {
 		if (result.hasErrors())
 			return "operation";
 		bilancioService.registraOperazione(bilancio);
