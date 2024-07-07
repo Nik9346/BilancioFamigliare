@@ -11,29 +11,32 @@ import it.bilancio.model.Bilancio;
 @Service
 public class BilancioServiceImpl implements BilancioService {
 	
+	//collego l'interfaccia dao che ci permettere di fare Crud
 	@Autowired
 	private BilancioDao bilancioDao;
 
+	//funzione utilizzata per registrare una nuova operazione passando un oggetto bilancio ricavato dal form
 	@Override
 	public void registraOperazione(Bilancio bilancio) {
 		bilancioDao.save(bilancio);
 	}
-
+	
+	//funzione utilizzata per recuperare l'intera lista delle operazioni presenti nel db
 	@Override
 	public List<Bilancio> getOperazioni() {
 		return (List<Bilancio>) bilancioDao.findAll();
 	}
-
+	//funzione utilizzata per recuperare un'operazione passato l'id
 	@Override
 	public Bilancio getOperazioneById(int id) {
 		return bilancioDao.findById(id).get();
 	}
-
+	//funzione utilizzata per cancellare un'operazione passando l'id dell'operazione
 	@Override
 	public void cancellaOperazione(int id) {
 		bilancioDao.deleteById(id);
-
 	}
+	//funzione utilizzata per calcolare il totale delle operazioni
 	@Override
 	public double getTotaleBilancio() {
 		List<Bilancio> operazioni = getOperazioni();

@@ -14,24 +14,34 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 @RequestMapping("/")
-public class IndexController {
+public class BalanceController {
 
+	//istanziamo il servizio che ci permette di fare CRUD
 	@Autowired
 	private BilancioService bilancioService;
 	
+	//rispondiamo alle richieste get visualizzando la pagina dopo aver recuperato e assegnato tutti i dati delle operazione dal db
 	@GetMapping()
 	public String getPage(Model model, @RequestParam(name="id", required = false) Integer id) {
+		//recuperiamo l'intera lista delle operazioni facendo una chiamata al db
 		List<Bilancio> operazioni = bilancioService.getOperazioni();
+		//costruiamo un oggetto operazione recuperando i dati dal db se tra i parametri della richiesta abbiamo id, altrimenti creiamo un nuovo oggetto bilancio
 		Bilancio operazione = id == null ? new Bilancio() : bilancioService.getOperazioneById(id);
+		//settiamo gli attributi del model con i dati delle variabili operazioni e operazione
 		model.addAttribute("operazioni", operazioni);
 		model.addAttribute("operazione",operazione);
+		//assegniamo al model la variabile totale recuperando dal service il totale delle operazioni
 		model.addAttribute("totale",bilancioService.getTotaleBilancio());
-		return "index";
+		//passiamo il tutto alla pagina balance
+		return "balance";
 	}
 	
+	//funzione utilizzata per eliminare un'operazione
 	@GetMapping("/elimina")
 	public String eliminaOperazione(Model model, @RequestParam(name = "id", required = true) int id) {
+		
 		bilancioService.cancellaOperazione(id);
+		//facciamo un reindirizzamento alla pagina principale dopo aver cancellato l'operazione per aggiornare la pagina
 		return "redirect:/";
 	}
 	
