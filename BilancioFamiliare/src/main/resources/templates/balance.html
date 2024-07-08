@@ -25,10 +25,10 @@
   <tbody>
     <tr th:each="operazione : ${operazioni}">
       <th th:text="${operazione.id}" scope="row">1</th>
-      <td th:text="${operazione.data}"></td>
+      <td th:text="${#temporals.format(operazione.data, 'dd-MM-yyyy')}"></td>
       <td th:text="${operazione.descrizione}"></td>
-      <td th:if="${operazione.valore > 0}" th:text="${operazione.valore}" style="color:green"></td> <td th:if="${operazione.valore < 0}"></td>
-      <td th:if="${operazione.valore <= 0}" th:text="${operazione.valore}" style="color:red"></td><td th:if="${operazione.valore > 0}"></td>
+      <td th:if="${operazione.valore > 0}" th:text="${#numbers.formatDecimal(operazione.valore,0,'POINT',2,'COMMA')}" style="color:green"></td> <td th:if="${operazione.valore < 0}"></td>
+      <td th:if="${operazione.valore <= 0}" th:text="${#numbers.formatDecimal(operazione.valore,0,'POINT',2,'COMMA')}" style="color:red"></td><td th:if="${operazione.valore > 0}"></td>
       <td><a class="btn btn-danger" type="button" th:href="@{/elimina(id=${operazione.id})}">Elimina</a></td>
     </tr>
   </tbody>
@@ -36,7 +36,7 @@
   <tr>
   	<th colspan="5" class="text-end" scope="col">Bilancio Attuale €</th>
   	<td colspan="2" class="text-end" th:text=" + ${totale}" th:if="${totale > 0}" style="color:green"></td>
-  	<td class="text-end" th:text="${totale}" th:if="${totale < 0}" style="color:red"></td>
+  	<td class="text-end" th:text="${#numbers.formatDecimal(totale,0,'POINT',2,'COMMA')}" th:if="${totale < 0}" style="color:red"></td>
   </tr>
   </tfoot>
 </table>
