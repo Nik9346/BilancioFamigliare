@@ -1,5 +1,6 @@
 package it.bilancio.service;
 
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,11 @@ public class BilancioServiceImpl implements BilancioService {
 	//funzione utilizzata per recuperare l'intera lista delle operazioni presenti nel db
 	@Override
 	public List<Bilancio> getOperazioni() {
-		return (List<Bilancio>) bilancioDao.findAll();
+		List<Bilancio> bilancio = (List<Bilancio>) bilancioDao.findAll();
+		//funzione utilizzata per ordinare le operazioni in base alla data
+		Comparator<Bilancio> byDate = Comparator.comparing(Bilancio::getData).reversed();
+		bilancio = bilancio.stream().sorted(byDate).toList();
+		return bilancio;
 	}
 	//funzione utilizzata per recuperare un'operazione passato l'id
 	@Override
