@@ -45,5 +45,4 @@ public class OperationController {
 		//registrata l'operazione facciamo un redirect alla pagina principale dove viene visualizzata anche la nuova operazione
 		return "redirect:/";
 	}
-
 }
